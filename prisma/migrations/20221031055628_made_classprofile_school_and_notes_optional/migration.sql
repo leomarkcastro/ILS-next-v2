@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ClassProfile" ALTER COLUMN "school" DROP NOT NULL,
+ALTER COLUMN "notes" DROP NOT NULL;
