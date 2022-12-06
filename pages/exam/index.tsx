@@ -27,6 +27,7 @@ export default function Page() {
       setStep(2);
       loadData();
     } else {
+      predictedType.clear();
       setStep(1);
       setLoad(true);
     }
@@ -44,6 +45,20 @@ export default function Page() {
     },
   };
 
+  const predictedType = {
+    get: () => {
+      return localStorage.getItem("predictedType");
+    },
+    set: (code) => {
+      localStorage.setItem("predictedType", code);
+    },
+    clear: () => {
+      localStorage.removeItem("predictedType");
+    },
+  };
+
+  const [predicted, setPredicted] = useState(null);
+
   function loadData() {
     fetch("/api/actions/accounts/getProfile", {
       method: "GET",
@@ -60,6 +75,7 @@ export default function Page() {
 
           if (data.ProfileDemoraphics.surveyAnswers) {
             setStep(4);
+            setPredicted(predictedType.get());
           }
         }
         setLoad(true);
@@ -300,6 +316,10 @@ export default function Page() {
                         Re-enter Exam Code
                       </button>
                     </div>
+                    <h2 className="text-xl">{predicted}</h2>
+                    <p className="text-sm">
+                      Your Predicted type based on your Survey
+                    </p>
                   </div>
                 )}
               </>

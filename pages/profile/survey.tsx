@@ -5,33 +5,66 @@ import { toast } from "react-toastify";
 
 function Page() {
   const router = useRouter();
-  const onSubmit = (e) => {
-    fetch("/api/actions/accounts/updateSurvey", {
+
+  const predictedType = {
+    get: () => {
+      return localStorage.getItem("predictedType");
+    },
+    set: (code) => {
+      localStorage.setItem("predictedType", code);
+    },
+    clear: () => {
+      localStorage.removeItem("predictedType");
+    },
+  };
+
+  const onSubmit = async (e) => {
+    const dat = await fetch("/api/actions/accounts/updateSurvey", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(e),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          toast(data.error, {
-            type: "error",
-          });
-        } else {
-          toast("Profile updated successfully", {
-            type: "success",
-          });
+    });
+    const datJson = await dat.json();
 
-          if (router.query.returnTo) {
-            router.push(router.query.returnTo as string);
-          } else {
-            router.push("/profile");
-          }
-        }
-        // router.push("/profile");
+    if (datJson.error) {
+      return toast(datJson.error, {
+        type: "error",
       });
+    }
+    toast("Profile updated successfully", {
+      type: "success",
+    });
+
+    const surveyAnswersMapped = Object.values(datJson.surveyAnswers).map((x) =>
+      Number(x)
+    );
+
+    const mldat = await fetch(
+      "https://learning-style-ml.app.xyzapps.xyz/api/ml/predictD3",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(surveyAnswersMapped),
+      }
+    );
+    const mldatJson = await mldat.json();
+
+    if (mldatJson.error) {
+      return toast(datJson.error, {
+        type: "error",
+      });
+    }
+
+    predictedType.set(mldatJson.prediction[0]);
+
+    if (router.query.returnTo) {
+      return router.push(router.query.returnTo as string);
+    }
+    return router.push("/profile");
   };
 
   const [profileInfo, setProfileInfo] = useState({

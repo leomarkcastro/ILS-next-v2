@@ -9,6 +9,18 @@ import { ChevronDoubleDownIcon } from "@heroicons/react/24/solid";
 export default function Page() {
   const router = useRouter();
 
+  const predictedType = {
+    get: () => {
+      return localStorage.getItem("predictedType");
+    },
+    set: (code) => {
+      localStorage.setItem("predictedType", code);
+    },
+    clear: () => {
+      localStorage.removeItem("predictedType");
+    },
+  };
+
   const surveyLength = surveyQuestions.length;
   const [survey, setSurvey] = useState({
     question:
@@ -211,6 +223,8 @@ export default function Page() {
           toast("Exam Saved Successfully");
 
           localStorage.removeItem("classCode");
+
+          // predictedType.clear();
           // router.push("/profile");
         } else {
           setResult({
@@ -250,10 +264,13 @@ export default function Page() {
 
   const saveRef = useRef(false);
 
+  const [predicted, setPredicted] = useState(null);
+
   useEffect(() => {
     if (!saveRef.current && survey.finish) {
       saveRef.current = true;
       saveExam();
+      setPredicted(predictedType.get());
     }
   }, [survey.finish]);
 
@@ -398,6 +415,10 @@ export default function Page() {
                   You are a
                   <span className="mx-3 text-orange-500">{result.acronym}</span>
                 </h3>
+                <p>
+                  Your predicted type is
+                  <span className="mx-1 text-blue-500">{predicted}</span>
+                </p>
               </div>
               <div className="flex flex-col items-center hidden gap-3 p-2 mb-8 bg-orange-300 shadow-lg lg:flex-row md:p-5 lg:gap-8">
                 <h3 className="text-lg text-center md:text-left md:text-2xl flex-[2]">
