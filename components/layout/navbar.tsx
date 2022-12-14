@@ -75,16 +75,17 @@ export default function Navbar() {
             className={`h-16 w-16 transition-all ${!onTop ? "h-8 w-8" : ""}`}
           />
           <div>
-            <p className="hidden text-sm font-bold md:text-base md:block">
-              Bulacan State University
+            <p className="hidden text-sm font-bold md:text-xs md:block">
+              <span className="text-orange-600">ILS</span> OF INFORMATION AND
+              COMMUNICATION TECHNOLOGY
             </p>{" "}
             <p className="block text-sm font-bold md:text-base md:hidden">
-              BSU
+              ILS of CICT
             </p>
             <p className="hidden text-xs text-orange-600 md:block">
-              College of Information and Communication Technology
+              BULACAN STATE UNIVERSITY
             </p>
-            <p className="block text-xs text-orange-600 md:hidden">CICT</p>
+            <p className="block text-xs text-orange-600 md:hidden">BSU</p>
           </div>
         </div>
       </div>
@@ -130,7 +131,7 @@ export default function Navbar() {
           )}
         </div>
       </div>
-      <div className="block col-span-2 lg:hidden">
+      <div className="flex items-center justify-end col-span-2 lg:hidden">
         <div className="flex justify-end">
           <button onClick={() => setShowMenu(!showMenu)}>Menu</button>
         </div>
@@ -171,7 +172,9 @@ export default function Navbar() {
               <li>
                 <button
                   className="text-black transition-colors hover:text-orange-600"
-                  onClick={() => router.push("/auth/signin")}
+                  onClick={() =>
+                    router.push("/auth/signin?returnTo=/classroom/global")
+                  }
                 >
                   Log In
                 </button>

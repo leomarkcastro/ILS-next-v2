@@ -3828,6 +3828,19 @@ export default function Form({
         <option value="Extended Family">Extended Family</option>
         <option value="Grand Parent Family">Grand Parent Family</option>
       </select>
+      <div className="text-sm">
+        <p>* Nuclear Family (two adults with at least one child) </p>
+        <p>
+          * Single-Parent Families (only one adult who is raising children){" "}
+        </p>
+        <p>
+          * Step Families (one single parent marries another single parent){" "}
+        </p>
+        <p>
+          * Extended Families (family might include relative live in one roof){" "}
+        </p>
+        <p>* Grandparent Families (consists of grandparent raising children)</p>
+      </div>
       <input
         className="p-2 mx-auto text-black bg-orange-400 rounded-lg cursor-pointer w-fit"
         type="submit"
