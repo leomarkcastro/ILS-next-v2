@@ -35,7 +35,7 @@ export default function SignIn({ providers }) {
         router.push("/");
       }
     } else {
-      toast("Failed to sign in with credentials", {
+      toast("Failed to Log In with credentials", {
         type: "error",
       });
     }
@@ -44,7 +44,7 @@ export default function SignIn({ providers }) {
   return (
     <main className="flex items-center justify-center min-h-screen">
       <div className="p-4 min-w-[50vw]">
-        <h2 className="text-4xl text-center">Sign In</h2>
+        <h2 className="text-4xl text-center">Log In</h2>
         <h1 className="text-xl text-center">Index of Learning Styles</h1>
         <form
           className="flex flex-col justify-center gap-2 my-4"
@@ -78,9 +78,13 @@ export default function SignIn({ providers }) {
             className="p-2 text-blue-700 border border-blue-300 shadow-md hover:bg-blue-500 hover:text-white"
             name="signin"
           >
-            Sign In
+            Log In
           </button>
-          <Link href="/auth/signup">
+          <Link
+            href={`/auth/signup?${
+              router.query.returnTo ? `returnTo=${router.query.returnTo}` : ""
+            }`}
+          >
             <a className="mt-6 text-xs text-center text-blue-500">
               Create A New Account
             </a>

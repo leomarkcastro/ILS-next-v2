@@ -67,7 +67,7 @@ export default function Page() {
       "Visual - Verbal": {},
     },
     picks: {},
-
+    results: [],
     acronym: "",
     modalMessage: "",
   });
@@ -120,6 +120,12 @@ export default function Page() {
       displayScaleList,
       scaleList: result.scaleList,
       picks: result.picks,
+      results: [
+        result.scaleList["Sequential - Global"] < 0 ? "Sequential" : "Global",
+        result.scaleList["Active - Reflective"] < 0 ? "Active" : "Reflective",
+        result.scaleList["Sensing - Intuitive"] < 0 ? "Sensing" : "Intuitive",
+        result.scaleList["Visual - Verbal"] < 0 ? "Visual" : "Verbal",
+      ],
       modalMessage: "",
     });
   }
@@ -278,7 +284,8 @@ export default function Page() {
 
   return (
     <div className="">
-      <div className="w-full transition-transform">
+      <div className="w-full transition-transform relative">
+        <div className="fixed top-0 left-0 right-0 BG_PAPER w-screen h-screen -z-10"></div>
         <AnimatePresence exitBeforeEnter>
           {!survey.finish ? (
             <motion.div
@@ -286,7 +293,7 @@ export default function Page() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               key="quest"
-              className="max-w-screen-sm min-h-screen pt-24 mx-auto"
+              className="max-w-screen-sm min-h-screen mt-20 p-4 mx-auto  bg-white border shadow-lg"
             >
               <p className="text-xl font-bold">
                 Learning Style Assessment Exam
@@ -404,7 +411,7 @@ export default function Page() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full min-h-screen flex flex-col items-center mt-24 max-w-[800px] mx-auto px-4"
+              className="w-full min-h-screen flex flex-col items-center mt-24 max-w-[800px] mx-auto p-4 bg-white border shadow-lg"
             >
               <h2 className="text-4xl font-bold border-b-4 border-b-orange-600">
                 Results
@@ -415,6 +422,18 @@ export default function Page() {
                   You are a
                   <span className="mx-3 text-orange-500">{result.acronym}</span>
                 </h3>
+                <p className="">
+                  {result.results.map((res, index) => {
+                    return (
+                      <span key={index}>
+                        <span className="mx-1 text-orange-500">{res}</span>
+                        {index != result.results.length - 1 && (
+                          <span className="mx-1">|</span>
+                        )}
+                      </span>
+                    );
+                  })}
+                </p>
                 <p>
                   Your predicted type is
                   <span className="mx-1 text-blue-500">{predicted}</span>

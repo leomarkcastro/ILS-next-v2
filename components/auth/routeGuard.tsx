@@ -52,7 +52,7 @@ export function RouteGuard({ children }) {
       <div className="w-full min-h-[80vh] flex flex-col justify-center items-center">
         <p>Access Denied</p>
         <Link href="/auth/signin">
-          <a className="text-blue-500">Sign In</a>
+          <a className="text-blue-500">Log In</a>
         </Link>
       </div>
     );

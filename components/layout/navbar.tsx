@@ -64,15 +64,32 @@ export default function Navbar() {
 
   return (
     <div
-      className={`grid grid-cols-3 fixed top-0 w-full z-10 animate__animated animate__fadeInDown transition-all pt-8 p-3 px-5 text-lg ${
+      className={`grid grid-cols-3 fixed top-0 w-full z-10 animate__animated animate__fadeInDown transition-all pt-3 p-3 px-5 text-lg ${
         !onTop && "bg-white pt-3 shadow-md z-50"
       }`}
     >
       <div className="">
-        <p>ILS</p>
+        <div className="flex items-center gap-2">
+          <img
+            src="/CICT.png"
+            className={`h-16 w-16 transition-all ${!onTop ? "h-8 w-8" : ""}`}
+          />
+          <div>
+            <p className="hidden text-sm font-bold md:text-base md:block">
+              Bulacan State University
+            </p>{" "}
+            <p className="block text-sm font-bold md:text-base md:hidden">
+              BSU
+            </p>
+            <p className="hidden text-xs text-orange-600 md:block">
+              College of Information and Communication Technology
+            </p>
+            <p className="block text-xs text-orange-600 md:hidden">CICT</p>
+          </div>
+        </div>
       </div>
       <div className="hidden grid-cols-2 col-span-2 lg:grid">
-        <nav className="flex-1">
+        <nav className="flex items-center justify-center flex-1 ">
           <ul className="flex items-center justify-center w-full gap-8">
             {routes.map((route) => {
               return (
@@ -84,7 +101,7 @@ export default function Navbar() {
                   }}
                 >
                   <Link href={route.path}>
-                    <a className="text-black transition-colors hover:text-orange-600">
+                    <a className="p-2 text-xl text-black transition-colors hover:bg-orange-600/25">
                       {route.name}
                     </a>
                   </Link>
@@ -104,9 +121,11 @@ export default function Navbar() {
           ) : (
             <button
               className="text-black transition-colors hover:text-orange-600"
-              onClick={() => router.push("/auth/signin")}
+              onClick={() =>
+                router.push("/auth/signin?returnTo=/classroom/global")
+              }
             >
-              Sign In
+              Log In As Admin
             </button>
           )}
         </div>
@@ -154,7 +173,7 @@ export default function Navbar() {
                   className="text-black transition-colors hover:text-orange-600"
                   onClick={() => router.push("/auth/signin")}
                 >
-                  Sign In
+                  Log In
                 </button>
               </li>
             )}

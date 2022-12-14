@@ -41,8 +41,7 @@ function Page() {
             </div>
           </div>
           <h1 className="text-5xl">
-            Index of{" "}
-            <span className="text-orange-600 underline">Learning Styles</span>
+            Index of <span className="text-orange-600 ">Learning Styles</span>
           </h1>
           <p className="py-4 text-sm">
             Get to know more about yourself about these exploratory questions

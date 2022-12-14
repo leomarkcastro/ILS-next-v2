@@ -15,6 +15,7 @@ export default function SignIn({ providers }) {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
+    secretkey: "",
   });
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -31,6 +32,7 @@ export default function SignIn({ providers }) {
       },
       {
         submitName,
+        secretkey: userInfo.secretkey,
       }
     );
     // console.log(res);
@@ -58,7 +60,7 @@ export default function SignIn({ providers }) {
         >
           <input
             type="text"
-            className="p-2 text-black border shadow-md border-gray"
+            className="p-2 text-black border shadow-md border-gray-700"
             placeholder="Email"
             value={userInfo.email}
             onChange={(e) => {
@@ -70,7 +72,7 @@ export default function SignIn({ providers }) {
           />
           <input
             type="password"
-            className="p-2 text-black shadow-md border-gray"
+            className="p-2 text-black shadow-md border-gray-700"
             value={userInfo.password}
             placeholder="Password"
             onChange={(e) => {
@@ -80,12 +82,18 @@ export default function SignIn({ providers }) {
               });
             }}
           />
-          <button
-            className="hidden p-2 text-blue-700 border border-blue-300 shadow-md hover:bg-blue-500 hover:text-white"
-            name="registerUser"
-          >
-            Sign Up As Student
-          </button>{" "}
+          <input
+            type="text"
+            className="p-2 text-black shadow-md border-gray-700"
+            value={userInfo.secretkey}
+            placeholder="Secret Key (Ask Admin for this)"
+            onChange={(e) => {
+              setUserInfo({
+                ...userInfo,
+                secretkey: e.target.value,
+              });
+            }}
+          />
           <button
             className="p-2 border shadow-md text-slate-800 border-slate-300 hover:bg-slate-500 hover:text-white"
             name="registerAdmin"
@@ -94,7 +102,7 @@ export default function SignIn({ providers }) {
           </button>
           <Link href="/auth/signin">
             <a className="mt-6 text-xs text-center text-blue-500">
-              Sign In Instead
+              Log In Instead
             </a>
           </Link>
         </form>

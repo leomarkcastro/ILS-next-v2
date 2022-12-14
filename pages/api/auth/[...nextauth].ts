@@ -17,9 +17,9 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
+      // The name to display on the Log In form (e.g. "Log In with...")
       name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
+      // `credentials` is used to generate a form on the Log In page.
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         // Add logic here to look up the user from the credentials supplied
 
         const { email, password } = credentials;
-        const { submitName } = req.query;
+        const { submitName, secretkey } = req.query;
 
         let user = null;
         if (!submitName) {
@@ -60,6 +60,13 @@ export const authOptions: NextAuthOptions = {
           }
         } else {
           if (!["registerUser", "registerAdmin"].includes(submitName)) {
+            return null;
+          }
+
+          if (
+            submitName == "registerAdmin" &&
+            secretkey !== "onlyAdminCanRegisterILS"
+          ) {
             return null;
           }
 
