@@ -129,7 +129,7 @@ export function ExamResultsTab(props) {
               </div>
             )}
           </div>{" "}
-          <div className="col-span-6">
+          <div className="hidden col-span-6">
             <p>
               <b>Average per Question</b>
             </p>
