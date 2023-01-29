@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/solid";
+import { predict_from_survey } from "@/lib/prediction_model";
 
 export default function Page() {
   const router = useRouter();
@@ -276,6 +277,12 @@ export default function Page() {
     if (!saveRef.current && survey.finish) {
       saveRef.current = true;
       saveExam();
+      try {
+        let survey_data = {};
+        predict_from_survey(survey_data);
+      } catch (err) {
+        // console.log(err);
+      }
       setPredicted(predictedType.get());
     }
   }, [survey.finish]);
@@ -284,8 +291,8 @@ export default function Page() {
 
   return (
     <div className="">
-      <div className="w-full transition-transform relative">
-        <div className="fixed top-0 left-0 right-0 BG_PAPER w-screen h-screen -z-10"></div>
+      <div className="relative w-full transition-transform">
+        <div className="fixed top-0 left-0 right-0 w-screen h-screen BG_PAPER -z-10"></div>
         <AnimatePresence exitBeforeEnter>
           {!survey.finish ? (
             <motion.div
@@ -293,7 +300,7 @@ export default function Page() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               key="quest"
-              className="max-w-screen-sm min-h-screen mt-20 p-4 mx-auto  bg-white border shadow-lg"
+              className="max-w-screen-sm min-h-screen p-4 mx-auto mt-20 bg-white border shadow-lg"
             >
               <p className="text-xl font-bold">
                 Learning Style Assessment Exam
