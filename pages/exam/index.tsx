@@ -6,6 +6,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+const typeMapping = [
+  ["Sequential", "Global"],
+  ["Active", "Reflective"],
+  ["Sensing", "Intuitive"],
+  ["Visual", "Verbal"],
+];
+
 export default function Page() {
   const [step, setStep] = useState(0);
   const router = useRouter();
@@ -295,7 +302,7 @@ export default function Page() {
                   </div>
                 )}{" "}
                 {step == 4 && (
-                  <div className="border border-gray-400 rounded p-2 shadow min-h-[40vh]  flex flex-col justify-center items-center text-center gap-2">
+                  <div className="border border-gray-400 rounded p-2 shadow min-h-[40vh]  flex flex-col justify-center items-center text-center">
                     <h2 className="text-2xl">Take the exam now!</h2>
                     <p>Start the Exam Now!</p>
                     <br />
@@ -316,7 +323,29 @@ export default function Page() {
                         Re-enter Exam Code
                       </button>
                     </div>
-                    <h2 className="text-xl">{predicted}</h2>
+                    <h2 className="text-2xl">{predicted}</h2>
+                    <p className="flex flex-row gap-1">
+                      {predicted
+                        .slice(0, 3)
+                        .split("")
+                        .map((p, i) => {
+                          return (
+                            <>
+                              <span key={i}>
+                                {typeMapping[i][0][0] == p
+                                  ? typeMapping[i][0]
+                                  : typeMapping[i][1]}
+                              </span>
+                              <span>·</span>
+                            </>
+                          );
+                        })}
+                      <span>
+                        {predicted.slice(3, 5) == typeMapping[3][0].slice(0, 2)
+                          ? typeMapping[3][0]
+                          : typeMapping[3][1]}
+                      </span>
+                    </p>
                     <p className="text-sm">
                       Your Predicted type based on your Survey
                     </p>
